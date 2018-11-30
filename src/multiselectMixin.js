@@ -67,7 +67,8 @@ export default {
       search: '',
       isOpen: false,
       prefferedOpenDirection: 'below',
-      optimizedHeight: this.maxHeight
+      optimizedHeight: this.maxHeight,
+      selectedItem : false
     }
   },
   props: {
@@ -329,6 +330,11 @@ export default {
     ) {
       this.select(this.filteredOptions[0])
     }
+
+    if(this.value && this.value.label) {
+        this.search = this.value.label;
+        this.selectedItem = true;
+    }
   },
   computed: {
     internalValue () {
@@ -386,7 +392,12 @@ export default {
     }
   },
   watch: {
+      value() {
+          if(this.value && this.value.label)
+            this.search = this.value.label;
+      },
     internalValue () {
+
       /* istanbul ignore else */
       if (this.resetAfter && this.internalValue.length) {
         this.search = ''
@@ -498,6 +509,8 @@ export default {
      * @param  {Boolean} block removing
      */
     select (option, key) {
+        this.selectedItem = true;
+        this.search = option.label;
       /* istanbul ignore else */
       if (option.$isLabel && this.groupSelect) {
         this.selectGroup(option)
@@ -515,11 +528,14 @@ export default {
       if (option.isTag) {
         this.$emit('tag', option.label, this.id)
         this.search = ''
+
         if (this.closeOnSelect && !this.multiple) this.deactivate()
       } else {
         const isSelected = this.isSelected(option)
 
         if (isSelected) {
+            this.selectedItem = false;
+            this.search = '';
           if (key !== 'Tab') this.removeElement(option)
           return
         }
@@ -596,6 +612,7 @@ export default {
      * @returns {type}        description
      */
     removeElement (option, shouldClose = true) {
+
       /* istanbul ignore else */
       if (this.disabled) return
       /* istanbul ignore else */
@@ -662,6 +679,10 @@ export default {
      * Sets this.isOpen to FALSE
      */
     deactivate () {
+        if(this.value && this.value.label && this.selectedItem)
+            this.search = this.value.label;
+        else if(!this.selectedItem)
+            this.search = '';
       /* istanbul ignore else */
       if (!this.isOpen) return
 

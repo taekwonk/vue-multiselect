@@ -1,14 +1,20 @@
 # vue-multiselect ![Build Status](https://circleci.com/gh/shentao/vue-multiselect/tree/2.0.svg?style=shield&circle-token=5c931ff28fd12587610f835472becdd514d09cef)[![Codecov branch](https://img.shields.io/codecov/c/github/shentao/vue-multiselect/2.0.svg)](https://codecov.io/gh/shentao/vue-multiselect/branch/2.0)[![npm](https://img.shields.io/npm/v/vue-multiselect.svg)](https://www.npmjs.com/package/vue-multiselect)
 
-###Custom version for IGS
-Code is added to keep the selected label text in search box, to mimic behavior of autocomplete. The selected object should have 'label' property for this to work. Also when using the component, following needs to be set
+### Custom version for IGS
+Code is added to keep the selected label text in search box, to mimic behavior of autocomplete. 
+The selected object should have 'label' property for this to work. 
+Also when using the component, following needs to be set
+```vue
  :clear-on-select="false" 
  :preserve-search="true"
  :multiple="false"
+```
 Following is also recommended
+```vue
  :hide-selected="true"
  :taggable="false"
  :show-no-results="false"
+```
 
 
 Probably the most complete *selecting* solution for Vue.js 2.0, without jQuery.
